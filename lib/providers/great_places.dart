@@ -14,14 +14,24 @@ class GreatPlaces with ChangeNotifier {
     return [..._items];
   }
 
-  void addPlace(String pickedTitle, File pickedImage,
-      PlaceLocation pickedLocation) async {
+  Place findById(String id) {
+    return _items.firstWhere((place) => place.id == id);
+  }
+
+  void addPlace(
+    String pickedTitle,
+    File pickedImage,
+    PlaceLocation pickedLocation,
+  ) async {
     final address = await LocationHelper.getPlaceAddress(
-        pickedLocation.latitude, pickedLocation.longitude);
+      pickedLocation.latitude,
+      pickedLocation.longitude,
+    );
     final updatedLocation = PlaceLocation(
-        latitude: pickedLocation.latitude,
-        longitude: pickedLocation.longitude,
-        address: address);
+      latitude: pickedLocation.latitude,
+      longitude: pickedLocation.longitude,
+      address: address,
+    );
     final newPlace = Place(
         id: DateTime.now().toString(),
         image: pickedImage,
